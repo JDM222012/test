@@ -4,7 +4,7 @@
       "sd": "Installa dalla SD",
       "hdd": "Installa da SSD/HDD USB",
       "net": "Installa via LAN o da internet",
-      "shop": "Installa da eShop",
+      "remote": "Installa da Remote",
       "usb": "Installa da NS-USBloader",
       "mtp": "Installa da MTP",
       "backup": "Esegui backup dei dati di salvataggio",
@@ -38,15 +38,15 @@
     "buttons": " Seleziona     Esci",
     "info": {
       "button": "Info",
-      "shop": "Sfoglia le sezioni dello shop e seleziona i titoli da installare dal tuo eShop.",
+      "remote": "Sfoglia Remote e seleziona i titoli da installare.",
       "sd": "Installa file NSP/NSZ/XCI/XCZ salvati sulla tua scheda SD.",
       "hdd": "Installa file direttamente da un SSD o disco rigido USB collegato.",
       "mtp": "Collega un PC via USB e installa copiando i file nella cartella di installazione MTP.",
       "usb": "Installa via USB con strumenti come NS-USBloader.",
       "net": "Installa file da fonti LAN o internet.",
       "sig": "Installa, aggiorna o rimuovi le signature patch.",
-      "set": "Modifica le preferenze di CyberFoil e le impostazioni dello shop.",
-      "backup": "Esegue con una sola azione il backup di tutti i dati di salvataggio locali dell'utente selezionato sul server shop configurato.\n\nCome funziona:\n1. Se ci sono piu utenti, scegli prima quale account salvare.\n2. Se non e configurato uno shop, CyberFoil prova i profili salvati e poi chiede un URL shop.\n3. Inserisci una nota di backup (obbligatoria).\n4. CyberFoil analizza i salvataggi locali di quell'utente e carica ogni voce sul server.\n5. Viene mostrato l'avanzamento durante scansione e upload.\n6. Un riepilogo finale mostra successi ed errori.",
+      "set": "Modifica le preferenze di CyberFoil e le impostazioni di Remote.",
+      "backup": "Esegue con una sola azione il backup di tutti i dati di salvataggio locali dell'utente selezionato sul server Remote configurato.\n\nCome funziona:\n1. Se ci sono più utenti, scegli prima quale account salvare.\n2. Se non è configurato un Remote, CyberFoil prova i profili salvati e poi chiede un URL Remote.\n3. Inserisci una nota di backup (obbligatoria).\n4. CyberFoil analizza i salvataggi locali di quell'utente e carica ogni voce sul server.\n5. Viene mostrato l'avanzamento durante scansione e upload.\n6. Un riepilogo finale mostra successi ed errori.",
       "exit": "Chiudi CyberFoil e torna al menu HOME."
     }
   },
@@ -79,14 +79,14 @@
       "buttons": " Installa via internet     Aiuto     Annulla",
       "buttons1": " Seleziona File     Seleziona tutto     Installa i File     Annulla"
     },
-    "shop": {
+    "remote": {
       "loading": "Caricamento elenco del negozio...",
       "top_info": "Seleziona i file che vuoi installare dal negozio, poi premi il tasto Più!",
       "failed": "Impossibile caricare il negozio",
       "unreachable": "Impossibile raggiungere il negozio.",
-      "encrypted_unsupported": "Le risposte del negozio crittografate non sono supportate. Disattiva «Crittografa negozio» nelle impostazioni di eShop.",
+      "encrypted_unsupported": "Le risposte del negozio crittografate non sono supportate. Disattiva «Crittografa negozio» nelle impostazioni di Remote.",
       "empty": "Il negozio non contiene file.",
-      "source_string": " dal eShop",
+      "source_string": " dal Remote",
       "buttons_loading": " Annulla",
       "buttons": " Seleziona File     Seleziona tutto     Installa i File     Aggiorna    / Sezione     Vista     Annulla",
       "buttons_all": " Seleziona File     Seleziona tutto     Installa i File     Aggiorna    / Sezione     Cerca     Vista     Annulla",
@@ -257,14 +257,14 @@
       "auto_update": "Controlla aggiornamenti di CyberFoil automaticamente",
       "gay_option": "Rimuovi anime",
       "sig_url": "Fonte URL SigPatches: ",
-      "shop_url": "URL eShop: ",
-      "shop_user": "Utente eShop: ",
-      "shop_pass": "Password eShop: ",
-      "shop_hide_installed": "Nascondi i titoli installati nell'eShop",
-      "shop_hide_installed_section": "Nascondi la sezione Installati nell’eShop",
-      "shop_all_base_only": "Mostra solo i titoli base nella sezione Tutti",
-      "shop_start_grid_mode": "Avvia il negozio in modalità griglia",
-      "shop_reset_icons": "Reimpostare la cache delle icone del negozio",
+      "remote_url": "URL Remote: ",
+      "remote_user": "Utente Remote: ",
+      "remote_pass": "Password Remote: ",
+      "remote_hide_installed": "Nascondi i titoli installati in Remote",
+      "remote_hide_installed_section": "Nascondi la sezione «Installati» in Remote",
+      "remote_all_base_only": "Mostra solo i titoli base nella sezione «Tutti»",
+      "remote_start_grid_mode": "Avvia Remote in modalità griglia",
+      "remote_reset_icons": "Reimposta la cache delle icone di Remote",
       "language": "Lingua: ",
       "check_update": "Controlla aggiornamenti di CyberFoil ora",
       "credits": "Crediti",
@@ -278,10 +278,10 @@
       "opt1": "Sì, sono sicuro!"
     },
     "sig_hint": "Inserisci l'URL da cui ottenere le SigPatches",
-    "shop": {
-      "url_hint": "Inserisci l'URL del tuo eShop (esempio: http://192.168.1.2:8465)",
-      "user_hint": "Inserisci il tuo nome utente eShop (opzionale)",
-      "pass_hint": "Inserisci la tua password eShop (opzionale)"
+    "remote": {
+      "url_hint": "Inserisci l'URL del tuo Remote (esempio: http://192.168.1.2:8465)",
+      "user_hint": "Inserisci il tuo nome utente Remote (opzionale)",
+      "pass_hint": "Inserisci la tua password Remote (opzionale)"
     },
     "cache_reset": {
       "title": "Reimpostare la cache delle icone del negozio?",

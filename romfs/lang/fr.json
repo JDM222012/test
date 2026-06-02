@@ -4,7 +4,7 @@
       "sd": "Installer à partir de la carte SD",
       "hdd": "Installer depuis un SSD/HDD USB",
       "net": "Installer à partir d'un LAN ou d'internet",
-      "shop": "Installer depuis eShop",
+      "remote": "Installer depuis Remote",
       "usb": "Installer via NS-USBloader",
       "mtp": "Installer via MTP",
       "backup": "Sauvegarder les donnees de jeu",
@@ -38,15 +38,15 @@
     "buttons": " Select     Quitter",
     "info": {
       "button": "Infos",
-      "shop": "Parcourez les sections de la boutique et sélectionnez des titres à installer depuis votre eShop.",
+      "remote": "Parcourez Remote et sélectionnez les titres à installer.",
       "sd": "Installez des fichiers NSP/NSZ/XCI/XCZ stockés sur votre carte SD.",
       "hdd": "Installez des fichiers directement depuis un SSD ou disque dur USB connecté.",
       "mtp": "Connectez un PC en USB et installez en copiant les fichiers dans le dossier d'installation MTP.",
       "usb": "Installez via USB avec des outils comme NS-USBloader.",
       "net": "Installez des fichiers depuis le LAN ou des sources internet.",
       "sig": "Installez, mettez à jour ou supprimez les signature patches.",
-      "set": "Modifiez les préférences CyberFoil et les paramètres de la boutique.",
-      "backup": "Sauvegarde en une seule action toutes les donnees de sauvegarde locales de l'utilisateur selectionne vers votre serveur eShop configure.\n\nFonctionnement :\n1. Si plusieurs utilisateurs existent, choisissez d'abord le compte a sauvegarder.\n2. Si aucun shop n'est configure, CyberFoil essaie les profils enregistres puis demande une URL de shop.\n3. Saisissez une note de sauvegarde (obligatoire).\n4. CyberFoil analyse les sauvegardes locales de cet utilisateur et envoie chaque element au serveur.\n5. Une progression est affichee pendant l'analyse et l'envoi.\n6. Un resume final indique les succes et les echecs.",
+      "set": "Modifiez les préférences CyberFoil et les paramètres de Remote.",
+      "backup": "Sauvegarde en une seule action toutes les donnees de sauvegarde locales de l'utilisateur selectionne vers votre serveur Remote configure.\n\nFonctionnement :\n1. Si plusieurs utilisateurs existent, choisissez d'abord le compte a sauvegarder.\n2. Si aucun remote n'est configure, CyberFoil essaie les profils enregistres puis demande une URL de remote.\n3. Saisissez une note de sauvegarde (obligatoire).\n4. CyberFoil analyse les sauvegardes locales de cet utilisateur et envoie chaque element au serveur.\n5. Une progression est affichee pendant l'analyse et l'envoi.\n6. Un resume final indique les succes et les echecs.",
       "exit": "Fermez CyberFoil et retournez au menu HOME."
     }
   },
@@ -85,14 +85,14 @@
       "buttons": " Installer via Internet     Aide     Annuler",
       "buttons1": " Sélectionnez un fichier     Tout sélectionner    Installer un/des fichier(s)     Annuler"
     },
-    "shop": {
-      "loading": "Chargement de la liste de la boutique...",
-      "top_info": "Sélectionnez les fichiers que vous voulez installer depuis la boutique, puis appuyez sur le bouton Plus !",
-      "failed": "Échec du chargement de la boutique",
-      "unreachable": "Impossible de joindre la boutique.",
-      "encrypted_unsupported": "Les réponses chiffrées de la boutique ne sont pas prises en charge. Désactivez « Chiffrer la boutique » dans les paramètres d’eShop.",
-      "empty": "La boutique ne contient aucun fichier.",
-      "source_string": " depuis la eShop",
+    "remote": {
+      "loading": "Chargement de la liste de Remote...",
+      "top_info": "Sélectionnez les fichiers que vous voulez installer depuis Remote, puis appuyez sur le bouton Plus !",
+      "failed": "Échec du chargement de Remote",
+      "unreachable": "Impossible de joindre Remote.",
+      "encrypted_unsupported": "Les réponses chiffrées de Remote ne sont pas prises en charge. Désactivez « Chiffrer Remote » dans les paramètres de Remote.",
+      "empty": "Remote ne contient aucun fichier.",
+      "source_string": " depuis Remote",
       "buttons_loading": " Annuler",
       "buttons": " Sélectionner un fichier     Tout sélectionner    Installer le(s) fichier(s)     Actualiser    / Section     Affichage     Annuler",
       "buttons_all": " Sélectionner un fichier     Tout sélectionner    Installer le(s) fichier(s)     Actualiser    / Section     Rechercher     Affichage     Annuler",
@@ -263,14 +263,14 @@
       "auto_update": "Vérifier automatiquement les mises à jour de CyberFoil",
       "gay_option": "Enlever la catgirl dans le menu",
       "sig_url": "Sigpatches URL: ",
-      "shop_url": "URL eShop: ",
-      "shop_user": "Utilisateur eShop: ",
-      "shop_pass": "Mot de passe eShop: ",
-      "shop_hide_installed": "Masquer les titres installés dans l’eShop",
-      "shop_hide_installed_section": "Masquer la section Installés dans l’eShop",
-      "shop_all_base_only": "Afficher uniquement les titres de base dans la section Tous",
-      "shop_start_grid_mode": "Démarrer la boutique en mode grille",
-      "shop_reset_icons": "Réinitialiser le cache des icônes de la boutique",
+      "remote_url": "URL Remote: ",
+      "remote_user": "Utilisateur Remote: ",
+      "remote_pass": "Mot de passe Remote: ",
+      "remote_hide_installed": "Masquer les titres installés dans Remote",
+      "remote_hide_installed_section": "Masquer la section « Installés » dans Remote",
+      "remote_all_base_only": "N'afficher que les titres de base dans la section « Tout »",
+      "remote_start_grid_mode": "Démarrer Remote en mode grille",
+      "remote_reset_icons": "Réinitialiser le cache des icônes de Remote",
       "language": "Langage: ",
       "check_update": "Vérifier les mises à jour de CyberFoil",
       "credits": "Crédits",
@@ -284,14 +284,14 @@
       "opt1": "Oui, je suis inconscient et je veux brick ma Switch"
     },
     "sig_hint": "Entrez l'URL pour obtenir les sigpatches",
-    "shop": {
-      "url_hint": "Entrez l’URL de votre eShop (exemple : http://192.168.1.2:8465)",
-      "user_hint": "Entrez votre nom d’utilisateur eShop (facultatif)",
-      "pass_hint": "Entrez votre mot de passe eShop (facultatif)"
+    "remote": {
+      "url_hint": "Entrez l’URL de votre Remote (exemple : http://192.168.1.2:8465)",
+      "user_hint": "Entrez votre nom d’utilisateur Remote (facultatif)",
+      "pass_hint": "Entrez votre mot de passe Remote (facultatif)"
     },
     "cache_reset": {
-      "title": "Réinitialiser le cache des icônes de la boutique ?",
-      "desc": "Cela supprimera toutes les icônes de boutique mises en cache et forcera un nouveau téléchargement la prochaine fois que vous ouvrirez la boutique.",
+      "title": "Réinitialiser le cache des icônes Remote ?",
+      "desc": "Cela supprimera toutes les icônes de Remote mises en cache et forcera un nouveau téléchargement la prochaine fois que vous ouvrirez Remote.",
       "confirm": "Réinitialiser"
     },
     "update": {

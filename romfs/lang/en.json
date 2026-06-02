@@ -4,7 +4,7 @@
             "sd": "Install from SD card",
             "hdd": "Install from USB SSD/HDD",
             "net": "Install over LAN or internet",
-            "shop": "Install from eShop",
+            "remote": "Install from Remote",
             "usb": "Install from NS-USBloader",
             "mtp": "Install over MTP",
             "backup": "Backup Save Data",
@@ -38,15 +38,15 @@
         "buttons": " Select     Exit",
         "info": {
             "button": "Info",
-            "shop": "Browse shop sections and select titles to install from your eShop.",
+            "remote": "Browse Remote sections and select titles to install from your Remote.",
             "sd": "Install NSP/NSZ/XCI/XCZ files stored on your SD card.",
             "hdd": "Install files directly from a connected USB SSD or hard drive.",
             "mtp": "Connect a PC over USB and install by copying files to the MTP install folder.",
             "usb": "Install over USB from tools like NS-USBloader.",
             "net": "Install files from LAN or internet sources.",
             "sig": "Install, update, or remove signature patches.",
-            "set": "Change CyberFoil preferences and shop settings.",
-            "backup": "Uploads all local save data for the selected user to your configured shop server in one action.\n\nHow it works:\n1. If multiple users exist, choose which account to back up.\n2. If no shop is configured, CyberFoil tries saved shop profiles first, then asks for a shop URL.\n3. Enter a backup note (required).\n4. CyberFoil scans that user's local saves and uploads each one to the server.\n5. Progress is shown during scan and upload.\n6. A final summary reports uploaded and failed saves.",
+            "set": "Change CyberFoil preferences and Remote settings.",
+            "backup": "Uploads all local save data for the selected user to your configured Remote server in one action.\n\nHow it works:\n1. If multiple users exist, choose which account to back up.\n2. If no Remote is configured, CyberFoil tries saved Remote profiles first, then asks for a Remote URL.\n3. Enter a backup note (required).\n4. CyberFoil scans that user's local saves and uploads each one to the server.\n5. Progress is shown during scan and upload.\n6. A final summary reports uploaded and failed saves.",
             "exit": "Close CyberFoil and return to HOME."
         }
     },
@@ -85,14 +85,14 @@
             "buttons": " Install Over Internet     Help     Cancel",
             "buttons1": " Select File     Select All     Install File(s)     Cancel"
         },
-        "shop": {
-            "loading": "Loading eShop list...",
-            "top_info": "Select what files you want to install from the shop, then press the Plus button! Section:",
-            "failed": "Failed to load shop",
-            "unreachable": "Cannot reach shop.",
-            "encrypted_unsupported": "Encrypted shop responses are not supported. Disable Encrypt shop in eShop settings.",
-            "empty": "Shop has no files.",
-            "source_string": " from eShop",
+        "remote": {
+            "loading": "Loading Remote list...",
+            "top_info": "Select what files you want to install from Remote, then press the Plus button! Section:",
+            "failed": "Failed to load Remote",
+            "unreachable": "Cannot reach Remote.",
+            "encrypted_unsupported": "Encrypted Remote responses are not supported. Disable Encrypt Remote in Remote settings.",
+            "empty": "Remote has no files.",
+            "source_string": " from Remote",
             "buttons_loading": " Cancel",
             "buttons": " Select File     Select All     Install File(s)     Refresh    / Section     View     Cancel",
             "buttons_all": " Select File     Select All     Install File(s)     Refresh    / Section     Search     View     Cancel",
@@ -263,14 +263,14 @@
             "auto_update": "Check for updates to CyberFoil automatically",
             "gay_option": "Remove anime",
             "sig_url": "Signature patches source URL: ",
-            "shop_url": "eShop URL: ",
-            "shop_user": "eShop username: ",
-            "shop_pass": "eShop password: ",
-            "shop_hide_installed": "Hide installed titles in eShop",
-            "shop_hide_installed_section": "Hide Installed section in eShop",
-            "shop_all_base_only": "Only show base titles in All section",
-            "shop_start_grid_mode": "Start shop in grid mode",
-            "shop_reset_icons": "Reset shop icon cache",
+            "remote_url": "Remote URL: ",
+            "remote_user": "Remote username: ",
+            "remote_pass": "Remote password: ",
+            "remote_hide_installed": "Hide installed titles in Remote",
+            "remote_hide_installed_section": "Hide Installed section in Remote",
+            "remote_all_base_only": "Only show base titles in All section",
+            "remote_start_grid_mode": "Start Remote in grid mode",
+            "remote_reset_icons": "Reset Remote icon cache",
             "language": "Language: ",
             "check_update": "Check for updates to CyberFoil",
             "credits": "Credits",
@@ -284,14 +284,14 @@
             "opt1": "Yes, I want a brick"
         },
         "sig_hint": "Enter the URL to obtain Signature Patches from",
-        "shop": {
-            "url_hint": "Enter your eShop URL (example: http://192.168.1.2:8465)",
-            "user_hint": "Enter your eShop username (optional)",
-            "pass_hint": "Enter your eShop password (optional)"
+        "remote": {
+            "url_hint": "Enter your Remote URL (example: http://192.168.1.2:8465)",
+            "user_hint": "Enter your Remote username (optional)",
+            "pass_hint": "Enter your Remote password (optional)"
         },
         "cache_reset": {
-            "title": "Reset shop icon cache?",
-            "desc": "This will delete all cached shop icons and force a re-download the next time you open the shop.",
+            "title": "Reset Remote icon cache?",
+            "desc": "This will delete all cached Remote icons and force a re-download the next time you open Remote.",
             "confirm": "Reset"
         },
         "update": {

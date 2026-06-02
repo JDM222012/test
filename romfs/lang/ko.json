@@ -4,7 +4,7 @@
       "sd": "SD 카드에서 설치",
       "hdd": "USB SSD/HDD에서 설치",
       "net": "LAN 또는 인터넷을 통해 설치",
-      "shop": "eShop에서 설치",
+      "remote": "Remote에서 설치",
       "usb": "NS-USBloader에서 설치",
       "mtp": "MTP에서 설치",
       "backup": "세이브 데이터 백업",
@@ -38,7 +38,7 @@
     "buttons": " 선택     종료",
     "info": {
       "button": "정보",
-      "shop": "샵 섹션을 둘러보고 eShop에서 설치할 타이틀을 선택합니다.",
+      "remote": "Remote 목록을 둘러보고 설치할 항목을 선택합니다.",
       "sd": "SD 카드에 저장된 NSP/NSZ/XCI/XCZ 파일을 설치합니다.",
       "hdd": "연결된 USB SSD 또는 하드 드라이브에서 파일을 직접 설치합니다.",
       "mtp": "USB로 PC를 연결하고 MTP 설치 폴더에 파일을 복사해 설치합니다.",
@@ -79,14 +79,14 @@
       "buttons": " 인터넷을 통해 설치     도움말     취소",
       "buttons1": " 파일 선택     모두 선택     파일 설치     취소"
     },
-    "shop": {
-      "loading": "상점 목록을 불러오는 중...",
-      "top_info": "상점에서 설치할 파일을 선택한 다음 플러스 버튼을 누르세요!",
-      "failed": "상점을 불러오지 못했습니다",
-      "unreachable": "상점에 접속할 수 없습니다.",
-      "encrypted_unsupported": "암호화된 상점 응답은 지원되지 않습니다. eShop 설정에서 '상점 암호화'를 비활성화하세요.",
-      "empty": "상점에 파일이 없습니다.",
-      "source_string": " eShop에서",
+    "remote": {
+      "loading": "Remote 목록을 불러오는 중...",
+      "top_info": "Remote에서 설치할 파일을 선택한 다음 플러스 버튼을 누르세요!",
+      "failed": "Remote를 불러오지 못했습니다",
+      "unreachable": "Remote에 접속할 수 없습니다.",
+      "encrypted_unsupported": "암호화된 Remote 응답은 지원되지 않습니다. Remote 설정에서 'Remote 암호화'를 비활성화하세요.",
+      "empty": "Remote에 파일이 없습니다.",
+      "source_string": " Remote에서",
       "buttons_loading": " 취소",
       "buttons": " 파일 선택     모두 선택     파일 설치     새로고침    / 섹션     보기     취소",
       "buttons_all": " 파일 선택     모두 선택     파일 설치     새로고침    / 섹션     검색     보기     취소",
@@ -257,14 +257,14 @@
       "auto_update": "CyberFoil 업데이트를 자동으로 확인",
       "gay_option": "애니메이션 제거",
       "sig_url": "서명 패치 소스 URL: ",
-      "shop_url": "eShop URL: ",
-      "shop_user": "eShop 사용자 이름: ",
-      "shop_pass": "eShop 비밀번호: ",
-      "shop_hide_installed": "eShop에서 설치된 타이틀 숨기기",
-      "shop_hide_installed_section": "eShop의 ‘설치됨’ 섹션 숨기기",
-      "shop_all_base_only": "전체 섹션에서 기본 타이틀만 표시",
-      "shop_start_grid_mode": "상점을 그리드 모드로 시작",
-      "shop_reset_icons": "상점 아이콘 캐시 재설정",
+      "remote_url": "Remote URL: ",
+      "remote_user": "Remote 사용자 이름: ",
+      "remote_pass": "Remote 비밀번호: ",
+      "remote_hide_installed": "Remote에서 설치된 항목 숨기기",
+      "remote_hide_installed_section": "Remote의 ‘설치됨’ 섹션 숨기기",
+      "remote_all_base_only": "전체 섹션에서는 기본 항목만 표시",
+      "remote_start_grid_mode": "Remote를 그리드 모드로 시작",
+      "remote_reset_icons": "Remote 아이콘 캐시 초기화",
       "language": "언어: ",
       "check_update": "CyberFoil 업데이트 확인",
       "credits": "크레딧",
@@ -278,14 +278,14 @@
       "opt1": "예, 벽돌을 원합니다."
     },
     "sig_hint": "서명 패치를 받을 URL을 입력하십시오.",
-    "shop": {
-      "url_hint": "eShop URL을 입력하세요 (예: http://192.168.1.2:8465)",
-      "user_hint": "eShop 사용자 이름을 입력하세요 (선택 사항)",
-      "pass_hint": "eShop 비밀번호를 입력하세요 (선택 사항)"
+    "remote": {
+      "url_hint": "Remote URL을 입력하세요 (예: http://192.168.1.2:8465)",
+      "user_hint": "Remote 사용자 이름을 입력하세요 (선택 사항)",
+      "pass_hint": "Remote 비밀번호를 입력하세요 (선택 사항)"
     },
     "cache_reset": {
-      "title": "상점 아이콘 캐시를 재설정할까요?",
-      "desc": "이 작업은 캐시된 상점 아이콘을 모두 삭제하고, 다음에 상점을 열 때 다시 다운로드하도록 합니다.",
+      "title": "Remote 아이콘 캐시를 재설정할까요?",
+      "desc": "이 작업은 캐시된 Remote 아이콘을 모두 삭제하고, 다음에 Remote를 열 때 다시 다운로드하도록 합니다.",
       "confirm": "재설정"
     },
     "update": {

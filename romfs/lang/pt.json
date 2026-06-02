@@ -4,7 +4,7 @@
       "sd": "Instalar através do cartão SD",
       "hdd": "Instalar a partir de SSD/HDD USB",
       "net": "Instalar através da LAN ou da Internet",
-      "shop": "Instalar a partir do eShop",
+      "remote": "Instalar pelo Remote",
       "usb": "Instalar a partir do NS-USBloader",
       "mtp": "Instalar a partir do MTP",
       "backup": "Fazer backup dos dados salvos",
@@ -38,15 +38,15 @@
     "buttons": " Selecionar     Sair",
     "info": {
       "button": "Info",
-      "shop": "Navegue pelas secções da loja e selecione títulos para instalar a partir da eShop.",
+      "remote": "Navegue pelo Remote e selecione os títulos que deseja instalar.",
       "sd": "Instale ficheiros NSP/NSZ/XCI/XCZ guardados no cartão SD.",
       "hdd": "Instale ficheiros diretamente de um SSD ou disco rígido USB ligado.",
       "mtp": "Ligue um PC por USB e instale ao copiar ficheiros para a pasta de instalação MTP.",
       "usb": "Instale por USB com ferramentas como o NS-USBloader.",
       "net": "Instale ficheiros a partir de fontes LAN ou internet.",
       "sig": "Instale, atualize ou remova os signature patches.",
-      "set": "Altere as preferências do CyberFoil e as definições da loja.",
-      "backup": "Faz backup de todos os dados salvos locais do usuario selecionado para o servidor da loja configurado em uma unica acao.\n\nComo funciona:\n1. Se houver varios usuarios, escolha primeiro a conta para backup.\n2. Se nenhuma loja estiver configurada, o CyberFoil tenta perfis salvos e depois solicita uma URL de loja.\n3. Insira uma nota de backup (obrigatoria).\n4. O CyberFoil analisa os saves locais desse usuario e envia cada um ao servidor.\n5. O progresso e exibido durante a analise e o envio.\n6. Um resumo final mostra sucessos e falhas.",
+      "set": "Altere as preferências do CyberFoil e as definições de Remote.",
+      "backup": "Faz backup de todos os dados salvos locais do usuário selecionado para o servidor Remote configurado em uma única ação.\n\nComo funciona:\n1. Se houver vários usuários, escolha primeiro a conta para backup.\n2. Se nenhum Remote estiver configurado, o CyberFoil tenta perfis salvos e depois solicita uma URL de Remote.\n3. Insira uma nota de backup (obrigatória).\n4. O CyberFoil analisa os saves locais desse usuário e envia cada um ao servidor.\n5. O progresso é exibido durante a análise e o envio.\n6. Um resumo final mostra sucessos e falhas.",
       "exit": "Feche o CyberFoil e volte ao menu HOME."
     }
   },
@@ -79,14 +79,14 @@
       "buttons": " Instalar através da Internet     Ajuda     Cancelar",
       "buttons1": " Selecionar Ficheiro     Selecionar Todos     Instalar Ficheiro(s)     Cancelar"
     },
-    "shop": {
-      "loading": "A carregar a lista da loja...",
-      "top_info": "Selecione os ficheiros que deseja instalar da loja e depois pressione o botão Mais!",
-      "failed": "Falha ao carregar a loja",
-      "unreachable": "Não foi possível acessar a loja.",
-      "encrypted_unsupported": "Respostas de loja criptografadas não são suportadas. Desative «Criptografar loja» nas configurações do eShop.",
-      "empty": "A loja não tem ficheiros.",
-      "source_string": " da eShop",
+    "remote": {
+      "loading": "A carregar a lista do Remote...",
+      "top_info": "Selecione os ficheiros que deseja instalar do Remote e depois pressione o botão Mais!",
+      "failed": "Falha ao carregar o Remote",
+      "unreachable": "Não foi possível aceder ao Remote.",
+      "encrypted_unsupported": "As respostas encriptadas do Remote não são suportadas. Desative «Criptografar Remote» nas definições do Remote.",
+      "empty": "O Remote não tem ficheiros.",
+      "source_string": " do Remote",
       "buttons_loading": " Cancelar",
       "buttons": " Selecionar Ficheiro     Selecionar Todos     Instalar Ficheiro(s)     Atualizar    / Secção     Ver     Cancelar",
       "buttons_all": " Selecionar Ficheiro     Selecionar Todos     Instalar Ficheiro(s)     Atualizar    / Secção     Pesquisar     Ver     Cancelar",
@@ -257,14 +257,14 @@
       "auto_update": "Procurar atualizações do CyberFoil automaticamente",
       "gay_option": "Remover animé",
       "sig_url": "URL da fonte dos patches de assinaturas: ",
-      "shop_url": "URL eShop: ",
-      "shop_user": "Utilizador eShop: ",
-      "shop_pass": "Palavra-passe eShop: ",
-      "shop_hide_installed": "Ocultar títulos instalados na eShop",
-      "shop_hide_installed_section": "Ocultar a seção Instalados na eShop",
-      "shop_all_base_only": "Mostrar apenas títulos base na seção Todos",
-      "shop_start_grid_mode": "Iniciar a loja no modo grelha",
-      "shop_reset_icons": "Repor a cache dos ícones da loja",
+      "remote_url": "URL Remote: ",
+      "remote_user": "Utilizador Remote: ",
+      "remote_pass": "Palavra-passe Remote: ",
+      "remote_hide_installed": "Ocultar títulos instalados no Remote",
+      "remote_hide_installed_section": "Ocultar a secção «Instalados» no Remote",
+      "remote_all_base_only": "Mostrar apenas títulos base na secção «Tudo»",
+      "remote_start_grid_mode": "Iniciar o Remote no modo grelha",
+      "remote_reset_icons": "Repor a cache de ícones do Remote",
       "language": "Idioma: ",
       "check_update": "Procurar atualizações do CyberFoil",
       "credits": "Créditos",
@@ -278,14 +278,14 @@
       "opt1": "Sim, Eu quero um tijolo"
     },
     "sig_hint": "Introduza o URL para obter os patches de assinaturas",
-    "shop": {
-      "url_hint": "Introduza o URL da sua eShop (exemplo: http://192.168.1.2:8465)",
-      "user_hint": "Introduza o seu nome de utilizador eShop (opcional)",
-      "pass_hint": "Introduza a sua palavra-passe eShop (opcional)"
+    "remote": {
+      "url_hint": "Introduza o URL da sua Remote (exemplo: http://192.168.1.2:8465)",
+      "user_hint": "Introduza o seu nome de utilizador Remote (opcional)",
+      "pass_hint": "Introduza a sua palavra-passe Remote (opcional)"
     },
     "cache_reset": {
-      "title": "Repor a cache dos ícones da loja?",
-      "desc": "Isto irá eliminar todos os ícones da loja em cache e forçar um novo download na próxima vez que abrir a loja.",
+      "title": "Repor a cache de ícones do Remote?",
+      "desc": "Isto irá eliminar todos os ícones do Remote em cache e forçar uma nova transferência na próxima vez que abrir o Remote.",
       "confirm": "Repor"
     },
     "update": {
@@ -323,3 +323,4 @@
     "cancel_desc": "Pressione B para cancelar"
   }
 }
+

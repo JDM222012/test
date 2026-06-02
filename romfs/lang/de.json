@@ -4,7 +4,7 @@
       "sd": "Von SD-Karte installieren",
       "hdd": "Von USB-SSD/Festplatte installieren",
       "net": "Über LAN oder Internet installieren",
-      "shop": "Installieren vom eShop",
+      "remote": "Von Remote installieren",
       "usb": "Mit NS-USBloader installieren",
       "mtp": "Mit MTP installieren",
       "backup": "Speicherdaten sichern",
@@ -38,15 +38,15 @@
     "buttons": " Auswählen     Beenden",
     "info": {
       "button": "Info",
-      "shop": "Durchsuche Shop-Bereiche und wähle Titel zur Installation aus dem eShop.",
+      "remote": "Durchsuche Remote und wähle Titel zur Installation aus.",
       "sd": "Installiere NSP/NSZ/XCI/XCZ-Dateien von deiner SD-Karte.",
       "hdd": "Installiere Dateien direkt von einer angeschlossenen USB-SSD oder Festplatte.",
       "mtp": "Verbinde einen PC per USB und installiere durch Kopieren von Dateien in den MTP-Installationsordner.",
       "usb": "Installiere per USB mit Tools wie NS-USBloader.",
       "net": "Installiere Dateien über LAN oder Internetquellen.",
       "sig": "Signatur-Patches installieren, aktualisieren oder entfernen.",
-      "set": "CyberFoil-Einstellungen und Shop-Optionen ändern.",
-      "backup": "Sichert alle lokalen Speicherdaten des gewahlten Benutzers mit einer Aktion auf deinen konfigurierten Shop-Server.\n\nSo funktioniert es:\n1. Wenn mehrere Benutzer vorhanden sind, wahle zuerst das Konto aus.\n2. Wenn kein Shop konfiguriert ist, versucht CyberFoil gespeicherte Shop-Profile und fragt sonst nach einer Shop-URL.\n3. Gib eine Sicherungsnotiz ein (erforderlich).\n4. CyberFoil scannt die lokalen Speicherdaten dieses Benutzers und ladt jeden Eintrag auf den Server hoch.\n5. Fortschritt wird beim Scannen und Hochladen angezeigt.\n6. Eine Zusammenfassung zeigt erfolgreiche und fehlgeschlagene Uploads.",
+      "set": "CyberFoil-Einstellungen und Remote-Optionen ändern.",
+      "backup": "Sichert alle lokalen Speicherdaten des gewahlten Benutzers mit einer Aktion auf deinen konfigurierten Remote-Server.\n\nSo funktioniert es:\n1. Wenn mehrere Benutzer vorhanden sind, wahle zuerst das Konto aus.\n2. Wenn kein Remote konfiguriert ist, versucht CyberFoil gespeicherte Remote-Profile und fragt sonst nach einer Remote-URL.\n3. Gib eine Sicherungsnotiz ein (erforderlich).\n4. CyberFoil scannt die lokalen Speicherdaten dieses Benutzers und ladt jeden Eintrag auf den Server hoch.\n5. Fortschritt wird beim Scannen und Hochladen angezeigt.\n6. Eine Zusammenfassung zeigt erfolgreiche und fehlgeschlagene Uploads.",
       "exit": "CyberFoil schließen und zum HOME-Menü zurückkehren."
     }
   },
@@ -79,14 +79,14 @@
       "buttons": " Installation über das Internet     Hilfe     Abbrechen",
       "buttons1": " Datei auswählen     Alle auswählen     Datei(en) installieren     Abbrechen"
     },
-    "shop": {
-      "loading": "Shop-Liste wird geladen...",
-      "top_info": "Wähle aus, welche Dateien du aus dem Shop installieren möchtest, und drücke dann die Plus-Taste!",
-      "failed": "Shop konnte nicht geladen werden",
-      "unreachable": "Shop nicht erreichbar.",
-      "encrypted_unsupported": "Verschlüsselte Shop-Antworten werden nicht unterstützt. Deaktiviere „Shop verschlüsseln“ in den eShop-Einstellungen.",
-      "empty": "Der Shop enthält keine Dateien.",
-      "source_string": " aus dem eShop",
+    "remote": {
+      "loading": "Remote-Liste wird geladen...",
+      "top_info": "Wähle aus, welche Dateien du aus dem Remote installieren möchtest, und drücke dann die Plus-Taste!",
+      "failed": "Remote konnte nicht geladen werden",
+      "unreachable": "Remote nicht erreichbar.",
+      "encrypted_unsupported": "Verschlüsselte Remote-Antworten werden nicht unterstützt. Deaktiviere „Remote verschlüsseln“ in den Remote-Einstellungen.",
+      "empty": "Der Remote enthält keine Dateien.",
+      "source_string": " aus Remote",
       "buttons_loading": " Abbrechen",
       "buttons": " Datei auswählen     Alle auswählen     Datei(en) installieren     Aktualisieren    / Abschnitt     View     Abbrechen",
       "buttons_all": " Datei auswählen     Alle auswählen     Datei(en) installieren     Aktualisieren    / Abschnitt     Suche     View     Abbrechen",
@@ -257,14 +257,14 @@
       "auto_update": "Suche automatisch nach Updates für CyberFoil",
       "gay_option": "Entferne Anime",
       "sig_url": "Signatur Patches URL: ",
-      "shop_url": "eShop URL: ",
-      "shop_user": "eShop Benutzername: ",
-      "shop_pass": "eShop Passwort: ",
-      "shop_hide_installed": "Installierte Titel im eShop ausblenden",
-      "shop_hide_installed_section": "Installiert-Abschnitt im eShop ausblenden",
-      "shop_all_base_only": "Nur Basistitel im Abschnitt „Alle“ anzeigen",
-      "shop_start_grid_mode": "Shop im Rastermodus starten",
-      "shop_reset_icons": "Shop-Icon-Cache zurücksetzen",
+      "remote_url": "Remote URL: ",
+      "remote_user": "Remote Benutzername: ",
+      "remote_pass": "Remote Passwort: ",
+      "remote_hide_installed": "Installierte Titel in Remote ausblenden",
+      "remote_hide_installed_section": "Abschnitt „Installiert“ in Remote ausblenden",
+      "remote_all_base_only": "Nur Basistitel im Abschnitt „Alle“ anzeigen",
+      "remote_start_grid_mode": "Remote im Rastermodus starten",
+      "remote_reset_icons": "Remote-Icon-Cache zurücksetzen",
       "language": "Sprache: ",
       "check_update": "Suche nach Updates für CyberFoil",
       "credits": "Anerkennung",
@@ -278,14 +278,14 @@
       "opt1": "Ja, ich möchte mein Gerät bricken"
     },
     "sig_hint": "Gib eine URL an, um Signatur Patches zu beziehen",
-    "shop": {
-      "url_hint": "Gib die URL deines eShops ein (Beispiel: http://192.168.1.2:8465)",
-      "user_hint": "Gib deinen eShop-Benutzernamen ein (optional)",
-      "pass_hint": "Gib dein eShop-Passwort ein (optional)"
+    "remote": {
+      "url_hint": "Gib die URL deines Remote ein (Beispiel: http://192.168.1.2:8465)",
+      "user_hint": "Gib deinen Remote-Benutzernamen ein (optional)",
+      "pass_hint": "Gib dein Remote-Passwort ein (optional)"
     },
     "cache_reset": {
-      "title": "Shop-Icon-Cache zurücksetzen?",
-      "desc": "Dadurch werden alle zwischengespeicherten Shop-Icons gelöscht und beim nächsten Öffnen des Shops erneut heruntergeladen.",
+      "title": "Remote-Icon-Cache zurücksetzen?",
+      "desc": "Dadurch werden alle zwischengespeicherten Remote-Icons gelöscht und beim nächsten Öffnen des Remotes erneut heruntergeladen.",
       "confirm": "Zurücksetzen"
     },
     "update": {

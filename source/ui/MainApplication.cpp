@@ -105,7 +105,7 @@ namespace inst::ui {
 
         this->mainPage = MainPage::New();
         this->netinstPage = netInstPage::New();
-        this->shopinstPage = shopInstPage::New();
+        this->remoteinstPage = remoteInstPage::New();
         this->sdinstPage = sdInstPage::New();
         this->usbinstPage = usbInstPage::New();
         this->hddinstPage = hddInstPage::New();
@@ -113,7 +113,7 @@ namespace inst::ui {
         this->optionspage = optionsPage::New();
         this->mainPage->SetOnInput(std::bind(&MainPage::onInput, this->mainPage, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3, std::placeholders::_4));
         this->netinstPage->SetOnInput(std::bind(&netInstPage::onInput, this->netinstPage, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3, std::placeholders::_4));
-        this->shopinstPage->SetOnInput(std::bind(&shopInstPage::onInput, this->shopinstPage, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3, std::placeholders::_4));
+        this->remoteinstPage->SetOnInput(std::bind(&remoteInstPage::onInput, this->remoteinstPage, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3, std::placeholders::_4));
         this->sdinstPage->SetOnInput(std::bind(&sdInstPage::onInput, this->sdinstPage, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3, std::placeholders::_4));
         this->usbinstPage->SetOnInput(std::bind(&usbInstPage::onInput, this->usbinstPage, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3, std::placeholders::_4));
         this->hddinstPage->SetOnInput(std::bind(&hddInstPage::onInput, this->hddinstPage, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3, std::placeholders::_4));
@@ -611,7 +611,7 @@ namespace inst::ui {
 
             applyAll(this->mainPage);
             applyAll(this->netinstPage);
-            applyAll(this->shopinstPage);
+            applyAll(this->remoteinstPage);
             applyAll(this->sdinstPage);
             applyAll(this->usbinstPage);
             applyAll(this->hddinstPage);

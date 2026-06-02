@@ -155,7 +155,7 @@ namespace {
         return std::string(buf);
     }
 
-    std::string NormalizeShopUrl(std::string url)
+    std::string NormalizeRemoteUrl(std::string url)
     {
         url = TrimAscii(url);
         if (url.empty())
@@ -201,9 +201,9 @@ namespace {
         return IsSafeZipRelativePath(outRel);
     }
 
-    std::string BuildUploadUrl(const std::string& shopUrl, std::uint64_t titleId)
+    std::string BuildUploadUrl(const std::string& remoteUrl, std::uint64_t titleId)
     {
-        const std::string baseUrl = NormalizeShopUrl(shopUrl);
+        const std::string baseUrl = NormalizeRemoteUrl(remoteUrl);
         if (baseUrl.empty())
             return std::string();
         return baseUrl + "/api/saves/upload/" + FormatTitleIdHex(titleId);
@@ -226,9 +226,9 @@ namespace {
         return normalized;
     }
 
-    std::string BuildDownloadUrl(const std::string& shopUrl, std::uint64_t titleId, const std::string& saveId = std::string())
+    std::string BuildDownloadUrl(const std::string& remoteUrl, std::uint64_t titleId, const std::string& saveId = std::string())
     {
-        const std::string baseUrl = NormalizeShopUrl(shopUrl);
+        const std::string baseUrl = NormalizeRemoteUrl(remoteUrl);
         if (baseUrl.empty())
             return std::string();
         const std::string normalizedSaveId = NormalizeSaveIdToken(saveId);
@@ -237,9 +237,9 @@ namespace {
         return baseUrl + "/api/saves/download/" + FormatTitleIdHex(titleId) + ".zip";
     }
 
-    std::string BuildDeleteUrl(const std::string& shopUrl, std::uint64_t titleId, const std::string& saveId = std::string())
+    std::string BuildDeleteUrl(const std::string& remoteUrl, std::uint64_t titleId, const std::string& saveId = std::string())
     {
-        const std::string baseUrl = NormalizeShopUrl(shopUrl);
+        const std::string baseUrl = NormalizeRemoteUrl(remoteUrl);
         if (baseUrl.empty())
             return std::string();
         const std::string normalizedSaveId = NormalizeSaveIdToken(saveId);
@@ -248,9 +248,9 @@ namespace {
         return baseUrl + "/api/saves/delete/" + FormatTitleIdHex(titleId);
     }
 
-    std::string BuildRemoteListUrl(const std::string& shopUrl)
+    std::string BuildRemoteListUrl(const std::string& remoteUrl)
     {
-        const std::string baseUrl = NormalizeShopUrl(shopUrl);
+        const std::string baseUrl = NormalizeRemoteUrl(remoteUrl);
         if (baseUrl.empty())
             return std::string();
         return baseUrl + "/api/saves/list";
@@ -269,7 +269,7 @@ namespace {
         return baseUrl + "/" + pathOrUrl;
     }
 
-    bool ResolveRemoteTitleId(const shopInstStuff::ShopItem& item, std::uint64_t& outTitleId)
+    bool ResolveRemoteTitleId(const remoteInstStuff::RemoteItem& item, std::uint64_t& outTitleId)
     {
         if (item.hasTitleId) {
             outTitleId = item.titleId;
@@ -658,7 +658,7 @@ namespace {
 
     void BuildVersionAndRevision(std::string& outVersion, std::string& outRevision)
     {
-        const std::string raw = inst::config::shopLegacyMode ? "20.0.2" : inst::config::appVersion;
+        const std::string raw = inst::config::remoteLegacyMode ? "20.0.2" : inst::config::appVersion;
         outVersion = raw.empty() ? "0.0" : raw;
         outRevision = "0";
 
@@ -688,7 +688,7 @@ namespace {
             outRevision = revisionToken.substr(0, digitsEnd);
     }
 
-    std::vector<std::string> BuildShopHeaders(const std::string& requestUrl, const std::string& user, const std::string& pass)
+    std::vector<std::string> BuildRemoteHeaders(const std::string& requestUrl, const std::string& user, const std::string& pass)
     {
         std::string themeHeader = "Theme: 0000000000000000000000000000000000000000000000000000000000000000";
         std::string versionValue;
@@ -696,7 +696,7 @@ namespace {
         BuildVersionAndRevision(versionValue, revisionValue);
         std::string versionHeader = "Version: " + versionValue;
         std::string revisionHeader = "Revision: " + revisionValue;
-        std::string languageHeader = "Language: " + Language::GetShopHeaderLanguage();
+        std::string languageHeader = "Language: " + Language::GetRemoteHeaderLanguage();
         std::string hauthHeader = "HAUTH: " + inst::util::ComputeHauthFromUrl(requestUrl);
         std::string uauthHeader = "UAUTH: " + inst::util::ComputeUauthFromUrl(requestUrl, user, pass);
         std::string uidHeader = "UID: " + inst::util::ComputeUidFromMmcCid();
@@ -740,7 +740,7 @@ namespace {
         curl_easy_setopt(curl, CURLOPT_CONNECTTIMEOUT_MS, 5000L);
 
         struct curl_slist* headerList = nullptr;
-        const auto headers = BuildShopHeaders(url, user, pass);
+        const auto headers = BuildRemoteHeaders(url, user, pass);
         for (const auto& header : headers)
             headerList = curl_slist_append(headerList, header.c_str());
         if (headerList)
@@ -808,7 +808,7 @@ namespace {
         curl_easy_setopt(curl, CURLOPT_CONNECTTIMEOUT_MS, 5000L);
 
         struct curl_slist* headerList = nullptr;
-        const auto headers = BuildShopHeaders(url, user, pass);
+        const auto headers = BuildRemoteHeaders(url, user, pass);
         for (const auto& header : headers)
             headerList = curl_slist_append(headerList, header.c_str());
         if (headerList)
@@ -880,19 +880,19 @@ namespace {
                 const int uiPercent = 10 + static_cast<int>((kSaveSyncUiTransferWeight * transferPercent) / 100.0);
                 inst::ui::instPage::setInstBarPerc(uiPercent);
                 inst::ui::instPage::setProgressDetailText(
-                    "inst.shop.save_sync.progress.download_fmt"_lang +
+                    "inst.remote.save_sync.progress.download_fmt"_lang +
                     std::to_string(transferPercent) + "% (" + FormatSizeForUi(now) + " / " + FormatSizeForUi(total) + ")");
             } else if (now > 0) {
                 if (!ShouldEmitUiProgress(*throttle, -1, now))
                     return 0;
-                inst::ui::instPage::setProgressDetailText("inst.shop.save_sync.progress.download_bytes_fmt"_lang + FormatSizeForUi(now));
+                inst::ui::instPage::setProgressDetailText("inst.remote.save_sync.progress.download_bytes_fmt"_lang + FormatSizeForUi(now));
             }
             return 0;
         });
         curl_easy_setopt(curl, CURLOPT_XFERINFODATA, &throttle);
 
         struct curl_slist* headerList = nullptr;
-        const auto headers = BuildShopHeaders(url, user, pass);
+        const auto headers = BuildRemoteHeaders(url, user, pass);
         for (const auto& header : headers)
             headerList = curl_slist_append(headerList, header.c_str());
         if (headerList)
@@ -1057,24 +1057,24 @@ namespace {
                 const int uiPercent = 30 + static_cast<int>((65.0 * transferPercent) / 100.0); // 30..95
                 inst::ui::instPage::setInstBarPerc(uiPercent);
                 inst::ui::instPage::setProgressDetailText(
-                    "inst.shop.save_sync.progress.upload_archive_fmt"_lang +
+                    "inst.remote.save_sync.progress.upload_archive_fmt"_lang +
                     std::to_string(transferPercent) + "% (" + FormatSizeForUi(now) + " / " + FormatSizeForUi(total) + ")");
             } else if (now > 0) {
                 if (!ShouldEmitUiProgress(*throttle, -1, now))
                     return 0;
-                inst::ui::instPage::setProgressDetailText("inst.shop.save_sync.progress.upload_archive_bytes_fmt"_lang + FormatSizeForUi(now));
+                inst::ui::instPage::setProgressDetailText("inst.remote.save_sync.progress.upload_archive_bytes_fmt"_lang + FormatSizeForUi(now));
             }
             if (dltotal > 0 && dlnow >= 0) {
                 const int responsePercent = static_cast<int>((static_cast<double>(dlnow) / static_cast<double>(dltotal)) * 100.0);
                 inst::ui::instPage::setProgressDetailText(
-                    "inst.shop.save_sync.progress.upload_wait_response_fmt"_lang + std::to_string(responsePercent) + "%");
+                    "inst.remote.save_sync.progress.upload_wait_response_fmt"_lang + std::to_string(responsePercent) + "%");
             }
             return 0;
         });
         curl_easy_setopt(curl, CURLOPT_XFERINFODATA, &throttle);
 
         struct curl_slist* headerList = nullptr;
-        const auto headers = BuildShopHeaders(url, user, pass);
+        const auto headers = BuildRemoteHeaders(url, user, pass);
         for (const auto& header : headers)
             headerList = curl_slist_append(headerList, header.c_str());
         if (headerList)
@@ -1185,13 +1185,13 @@ namespace {
 }
 
 namespace inst::save_sync {
-    bool FetchRemoteSaveItems(const std::string& shopUrl, const std::string& user, const std::string& pass, std::vector<shopInstStuff::ShopItem>& outItems, std::string& warning)
+    bool FetchRemoteSaveItems(const std::string& remoteUrl, const std::string& user, const std::string& pass, std::vector<remoteInstStuff::RemoteItem>& outItems, std::string& warning)
     {
         outItems.clear();
         warning.clear();
 
-        const std::string baseUrl = NormalizeShopUrl(shopUrl);
-        const std::string listUrl = BuildRemoteListUrl(shopUrl);
+        const std::string baseUrl = NormalizeRemoteUrl(remoteUrl);
+        const std::string listUrl = BuildRemoteListUrl(remoteUrl);
         if (listUrl.empty())
             return true;
 
@@ -1248,12 +1248,12 @@ namespace inst::save_sync {
                     downloadUrl = save["url"].get<std::string>();
                 downloadUrl = BuildFullUrl(baseUrl, downloadUrl);
                 if (downloadUrl.empty())
-                    downloadUrl = BuildDownloadUrl(shopUrl, titleId, saveId);
+                    downloadUrl = BuildDownloadUrl(remoteUrl, titleId, saveId);
 
                 std::uint64_t size = 0;
                 TryGetU64ByKeys(save, {"size", "archive_size", "archiveSize"}, size);
 
-                shopInstStuff::ShopItem item;
+                remoteInstStuff::RemoteItem item;
                 item.name = name;
                 item.url = downloadUrl;
                 item.size = size;
@@ -1273,7 +1273,7 @@ namespace inst::save_sync {
         return true;
     }
 
-    bool BuildEntriesForUser(const std::vector<shopInstStuff::ShopItem>& remoteItems, const AccountUid* uid, std::vector<SaveSyncEntry>& outEntries, std::string& warning)
+    bool BuildEntriesForUser(const std::vector<remoteInstStuff::RemoteItem>& remoteItems, const AccountUid* uid, std::vector<SaveSyncEntry>& outEntries, std::string& warning)
     {
         warning.clear();
         outEntries.clear();
@@ -1354,12 +1354,12 @@ namespace inst::save_sync {
         return true;
     }
 
-    bool BuildEntries(const std::vector<shopInstStuff::ShopItem>& remoteItems, std::vector<SaveSyncEntry>& outEntries, std::string& warning)
+    bool BuildEntries(const std::vector<remoteInstStuff::RemoteItem>& remoteItems, std::vector<SaveSyncEntry>& outEntries, std::string& warning)
     {
         return BuildEntriesForUser(remoteItems, nullptr, outEntries, warning);
     }
 
-    bool UploadSaveToServerForUser(const std::string& shopUrl, const std::string& user, const std::string& pass, const AccountUid* uid, const SaveSyncEntry& entry, const std::string& note, std::string& error)
+    bool UploadSaveToServerForUser(const std::string& remoteUrl, const std::string& user, const std::string& pass, const AccountUid* uid, const SaveSyncEntry& entry, const std::string& note, std::string& error)
     {
         error.clear();
         if (entry.titleId == 0) {
@@ -1386,16 +1386,16 @@ namespace inst::save_sync {
         if (!MountSaveDataForTitle(targetUid, entry.titleId, true, error))
             return false;
 
-        inst::ui::instPage::setTopInstInfoText("inst.shop.save_sync.title"_lang);
-        inst::ui::instPage::setInstInfoText("inst.shop.save_sync.status.packaging"_lang);
+        inst::ui::instPage::setTopInstInfoText("inst.remote.save_sync.title"_lang);
+        inst::ui::instPage::setInstInfoText("inst.remote.save_sync.status.packaging"_lang);
         inst::ui::instPage::setInstBarPerc(2);
-        inst::ui::instPage::setProgressDetailText("inst.shop.save_sync.progress.scanning_files"_lang);
+        inst::ui::instPage::setProgressDetailText("inst.remote.save_sync.progress.scanning_files"_lang);
         auto zipProgressCb = [](std::size_t index, std::size_t total, const std::string& relativePath) {
             const int percent = (total > 0) ? static_cast<int>((index * 100ULL) / total) : 0;
             const int uiPercent = 2 + static_cast<int>((28.0 * percent) / 100.0); // 2..30
             inst::ui::instPage::setInstBarPerc(uiPercent);
             inst::ui::instPage::setProgressDetailText(
-                "inst.shop.save_sync.progress.compressing_fmt"_lang +
+                "inst.remote.save_sync.progress.compressing_fmt"_lang +
                 std::to_string(index) + "/" + std::to_string(total) + ": " + inst::util::shortenString(relativePath, 72, false));
         };
         if (!CreateZipFromDirectory(mountedPath, archivePath, error, zipProgressCb)) {
@@ -1404,12 +1404,12 @@ namespace inst::save_sync {
         }
 
         fsdevUnmountDevice(kSaveMountName);
-        inst::ui::instPage::setInstInfoText("inst.shop.save_sync.status.uploading_archive"_lang);
+        inst::ui::instPage::setInstInfoText("inst.remote.save_sync.status.uploading_archive"_lang);
         inst::ui::instPage::setInstBarPerc(30);
 
-        const std::string uploadUrl = BuildUploadUrl(shopUrl, entry.titleId);
+        const std::string uploadUrl = BuildUploadUrl(remoteUrl, entry.titleId);
         if (uploadUrl.empty()) {
-            error = "Shop URL is not configured.";
+            error = "Remote URL is not configured.";
             return false;
         }
 
@@ -1418,16 +1418,16 @@ namespace inst::save_sync {
 
         std::filesystem::remove_all(tempRoot, ec);
         inst::ui::instPage::setInstBarPerc(100);
-        inst::ui::instPage::setProgressDetailText("inst.shop.save_sync.progress.upload_complete"_lang);
+        inst::ui::instPage::setProgressDetailText("inst.remote.save_sync.progress.upload_complete"_lang);
         return true;
     }
 
-    bool UploadSaveToServer(const std::string& shopUrl, const std::string& user, const std::string& pass, const SaveSyncEntry& entry, const std::string& note, std::string& error)
+    bool UploadSaveToServer(const std::string& remoteUrl, const std::string& user, const std::string& pass, const SaveSyncEntry& entry, const std::string& note, std::string& error)
     {
-        return UploadSaveToServerForUser(shopUrl, user, pass, nullptr, entry, note, error);
+        return UploadSaveToServerForUser(remoteUrl, user, pass, nullptr, entry, note, error);
     }
 
-    bool DownloadSaveToConsole(const std::string& shopUrl, const std::string& user, const std::string& pass, const SaveSyncEntry& entry, const SaveSyncRemoteVersion* remoteVersion, std::string& error)
+    bool DownloadSaveToConsole(const std::string& remoteUrl, const std::string& user, const std::string& pass, const SaveSyncEntry& entry, const SaveSyncRemoteVersion* remoteVersion, std::string& error)
     {
         error.clear();
         if (entry.titleId == 0) {
@@ -1452,9 +1452,9 @@ namespace inst::save_sync {
                 downloadUrl = selectedRemoteVersion->downloadUrl;
         }
         if (downloadUrl.empty())
-            downloadUrl = BuildDownloadUrl(shopUrl, entry.titleId, selectedSaveId);
+            downloadUrl = BuildDownloadUrl(remoteUrl, entry.titleId, selectedSaveId);
         if (downloadUrl.empty())
-            downloadUrl = BuildDownloadUrl(shopUrl, entry.titleId);
+            downloadUrl = BuildDownloadUrl(remoteUrl, entry.titleId);
         if (downloadUrl.empty()) {
             error = "No download URL available for this save.";
             return false;
@@ -1467,7 +1467,7 @@ namespace inst::save_sync {
         std::filesystem::create_directories(tempRoot, ec);
 
         inst::ui::instPage::setInstBarPerc(10);
-        inst::ui::instPage::setProgressDetailText("inst.shop.save_sync.progress.starting_download"_lang);
+        inst::ui::instPage::setProgressDetailText("inst.remote.save_sync.progress.starting_download"_lang);
         if (!HttpDownloadFileWithAuthAndProgress(downloadUrl, archivePath.string(), user, pass, 60000, error)) {
             if (error.empty())
                 error = "Failed to download save archive from server.";
@@ -1482,14 +1482,14 @@ namespace inst::save_sync {
             return false;
 
         const std::string mountedPath = std::string(kSaveMountName) + ":/";
-        inst::ui::instPage::setInstInfoText("inst.shop.save_sync.status.preparing_restore"_lang);
-        inst::ui::instPage::setProgressDetailText("inst.shop.save_sync.progress.clearing_existing_files"_lang);
+        inst::ui::instPage::setInstInfoText("inst.remote.save_sync.status.preparing_restore"_lang);
+        inst::ui::instPage::setProgressDetailText("inst.remote.save_sync.progress.clearing_existing_files"_lang);
         if (!ClearDirectoryContents(mountedPath, error)) {
             fsdevUnmountDevice(kSaveMountName);
             return false;
         }
         inst::ui::instPage::setInstBarPerc(85);
-        inst::ui::instPage::setProgressDetailText("inst.shop.save_sync.progress.applying_save_data"_lang);
+        inst::ui::instPage::setProgressDetailText("inst.remote.save_sync.progress.applying_save_data"_lang);
         Result clearCommitRc = fsdevCommitDevice(kSaveMountName);
         if (R_FAILED(clearCommitRc)) {
             fsdevUnmountDevice(kSaveMountName);
@@ -1507,7 +1507,7 @@ namespace inst::save_sync {
             const int uiPercent = 85 + static_cast<int>((14.0 * percent) / 100.0); // 85..99
             inst::ui::instPage::setInstBarPerc(uiPercent);
             inst::ui::instPage::setProgressDetailText(
-                "inst.shop.save_sync.progress.restoring_fmt"_lang +
+                "inst.remote.save_sync.progress.restoring_fmt"_lang +
                 std::to_string(index) + "/" + std::to_string(total) + ": " + inst::util::shortenString(relativePath, 72, false));
         };
         if (!ExtractZipToMountedSaveWithCommits(archivePath, mountedPath, kSaveMountName, error, extractProgressCb)) {
@@ -1524,11 +1524,11 @@ namespace inst::save_sync {
 
         std::filesystem::remove_all(tempRoot, ec);
         inst::ui::instPage::setInstBarPerc(100);
-        inst::ui::instPage::setProgressDetailText("inst.shop.save_sync.progress.complete"_lang);
+        inst::ui::instPage::setProgressDetailText("inst.remote.save_sync.progress.complete"_lang);
         return true;
     }
 
-    bool DeleteSaveFromServer(const std::string& shopUrl, const std::string& user, const std::string& pass, const SaveSyncEntry& entry, const SaveSyncRemoteVersion* remoteVersion, std::string& error)
+    bool DeleteSaveFromServer(const std::string& remoteUrl, const std::string& user, const std::string& pass, const SaveSyncEntry& entry, const SaveSyncRemoteVersion* remoteVersion, std::string& error)
     {
         error.clear();
         if (entry.titleId == 0) {
@@ -1548,9 +1548,9 @@ namespace inst::save_sync {
         if (selectedRemoteVersion && !selectedRemoteVersion->saveId.empty())
             selectedSaveId = selectedRemoteVersion->saveId;
 
-        std::string deleteUrl = BuildDeleteUrl(shopUrl, entry.titleId, selectedSaveId);
+        std::string deleteUrl = BuildDeleteUrl(remoteUrl, entry.titleId, selectedSaveId);
         if (deleteUrl.empty())
-            deleteUrl = BuildDeleteUrl(shopUrl, entry.titleId);
+            deleteUrl = BuildDeleteUrl(remoteUrl, entry.titleId);
         if (deleteUrl.empty()) {
             error = "No delete URL available for this save.";
             return false;

@@ -4,7 +4,7 @@
       "sd": "通过 SD 卡安装",
       "hdd": "通过 USB SSD/HDD 安装",
       "net": "通过局域网或网络安装",
-      "shop": "通过 eShop 安装",
+      "remote": "从 Remote 安装",
       "usb": "通过 NS-USBloader 安装",
       "mtp": "通过 MTP 安装",
       "backup": "备份存档数据",
@@ -38,15 +38,15 @@
     "buttons": " 选择     退出",
     "info": {
       "button": "信息",
-      "shop": "浏览商店分区，并从 eShop 中选择要安装的标题。",
+      "remote": "浏览 Remote 并选择要安装的内容。",
       "sd": "安装存储在 SD 卡中的 NSP/NSZ/XCI/XCZ 文件。",
       "hdd": "直接从已连接的 USB SSD 或移动硬盘安装文件。",
       "mtp": "通过 USB 连接电脑，将文件复制到 MTP 安装文件夹后进行安装。",
       "usb": "使用 NS-USBloader 等工具通过 USB 安装。",
       "net": "从局域网或互联网来源安装文件。",
       "sig": "安装、更新或移除签名补丁。",
-      "set": "修改 CyberFoil 偏好和商店设置。",
-      "backup": "将所选用户的全部本地存档数据一次性备份到你已配置的商店服务器。\n\n工作方式：\n1. 如果有多个用户，先选择要备份的账号。\n2. 如果未配置商店，CyberFoil 会先尝试已保存的商店配置，否则会要求输入商店 URL。\n3. 输入备份备注（必填）。\n4. CyberFoil 会扫描该用户的本地存档，并逐个上传到服务器。\n5. 扫描和上传过程中会显示进度。\n6. 最后会显示成功与失败的汇总。",
+      "set": "修改 CyberFoil 偏好和 Remote 设置。",
+      "backup": "将所选用户的全部本地存档数据一次性备份到你已配置的 Remote 服务器。\n\n工作方式：\n1. 如果有多个用户，先选择要备份的账号。\n2. 如果未配置 Remote，CyberFoil 会先尝试已保存的 Remote 配置，否则会要求输入 Remote URL。\n3. 输入备份备注（必填）。\n4. CyberFoil 会扫描该用户的本地存档，并逐个上传到服务器。\n5. 扫描和上传过程中会显示进度。\n6. 最后会显示成功与失败的汇总。",
       "exit": "关闭 CyberFoil 并返回 HOME。"
     }
   },
@@ -79,14 +79,14 @@
       "buttons": " 网络安装     帮助     取消",
       "buttons1": " 选择     全选     安装     取消"
     },
-    "shop": {
-      "loading": "正在加载商店列表...",
-      "top_info": "选择要从商店安装的文件，然后按  进行安装！",
-      "failed": "加载商店失败",
-      "unreachable": "无法连接到商店。",
-      "encrypted_unsupported": "不支持加密的商店响应。请在 eShop 设置中禁用“加密商店”。",
-      "empty": "商店中没有可用文件。",
-      "source_string": " 来自 eShop",
+    "remote": {
+      "loading": "正在加载 Remote 列表...",
+      "top_info": "选择要从 Remote 安装的文件，然后按  进行安装！",
+      "failed": "加载 Remote 失败",
+      "unreachable": "无法连接到 Remote。",
+      "encrypted_unsupported": "不支持加密的 Remote 响应。请在 Remote 设置中禁用“加密 Remote”。",
+      "empty": "Remote 中没有可用文件。",
+      "source_string": " 来自 Remote",
       "buttons_loading": " 取消",
       "buttons": " 选择     全选     安装     刷新    / 分区     查看     取消",
       "buttons_all": " 选择     全选     安装     刷新    / 分区     搜索     查看     取消",
@@ -257,14 +257,14 @@
       "auto_update": "自动检查 CyberFoil 更新",
       "gay_option": "基友模式",
       "sig_url": "签名补丁源链接 (URL)：",
-      "shop_url": "eShop 地址：",
-      "shop_user": "eShop 用户名：",
-      "shop_pass": "eShop 密码：",
-      "shop_hide_installed": "在 eShop 中隐藏已安装的标题",
-      "shop_hide_installed_section": "隐藏 eShop 的“已安装”分区",
-      "shop_all_base_only": "在“全部”分区仅显示基础标题",
-      "shop_start_grid_mode": "以网格模式启动商店",
-      "shop_reset_icons": "重置商店图标缓存",
+      "remote_url": "Remote 地址：",
+      "remote_user": "Remote 用户名：",
+      "remote_pass": "Remote 密码：",
+      "remote_hide_installed": "在 Remote 中隐藏已安装的内容",
+      "remote_hide_installed_section": "隐藏 Remote 的“已安装”分区",
+      "remote_all_base_only": "在“全部”分区仅显示基础内容",
+      "remote_start_grid_mode": "以网格模式启动 Remote",
+      "remote_reset_icons": "重置 Remote 图标缓存",
       "language": "语言：",
       "check_update": "检查 CyberFoil 更新",
       "credits": "致谢",
@@ -278,14 +278,14 @@
       "opt1": "是的，我不怕变砖"
     },
     "sig_hint": "输入签名补丁源链接 (URL)",
-    "shop": {
-      "url_hint": "请输入 eShop地址 (例如: http://192.168.1.2:8465)",
-      "user_hint": "请输入 eShop 用户名 (可选)",
-      "pass_hint": "请输入 eShop 密码 (可选)"
+    "remote": {
+      "url_hint": "请输入 Remote地址 (例如: http://192.168.1.2:8465)",
+      "user_hint": "请输入 Remote 用户名 (可选)",
+      "pass_hint": "请输入 Remote 密码 (可选)"
     },
     "cache_reset": {
-      "title": "重置商店图标缓存？",
-      "desc": "这将删除所有已缓存的商店图标，并在你下次打开商店时强制重新下载。",
+      "title": "重置 Remote 图标缓存？",
+      "desc": "这将删除所有已缓存的 Remote 图标，并在你下次打开 Remote 时强制重新下载。",
       "confirm": "重置"
     },
     "update": {
@@ -323,3 +323,4 @@
     "cancel_desc": "按  取消"
   }
 }
+

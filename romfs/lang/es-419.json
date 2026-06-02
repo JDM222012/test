@@ -4,7 +4,7 @@
       "sd": "Instalar desde tarjeta SD",
       "hdd": "Instalar desde SSD/HDD USB",
       "net": "Instalar a través de red local o Internet",
-      "shop": "Instalar desde eShop",
+      "remote": "Instalar desde Remote",
       "usb": "Instalar desde NS-USBloader",
       "mtp": "Instalar via MTP",
       "backup": "Respaldar datos guardados",
@@ -38,15 +38,15 @@
     "buttons": " Seleccionar     Salir",
     "info": {
       "button": "Info",
-      "shop": "Explora las secciones de la tienda y selecciona títulos para instalar desde eShop.",
+      "remote": "Explora Remote y selecciona los títulos que quieres instalar.",
       "sd": "Instala archivos NSP/NSZ/XCI/XCZ almacenados en tu tarjeta SD.",
       "hdd": "Instala archivos directamente desde un SSD o disco duro USB conectado.",
       "mtp": "Conecta una PC por USB e instala copiando archivos a la carpeta de instalación MTP.",
       "usb": "Instala por USB con herramientas como NS-USBloader.",
       "net": "Instala archivos desde fuentes LAN o de internet.",
       "sig": "Instala, actualiza o elimina parches de firma.",
-      "set": "Cambia las preferencias de CyberFoil y opciones de la tienda.",
-      "backup": "Respalda todos los datos guardados locales del usuario seleccionado en tu servidor de tienda configurado con una sola accion.\n\nComo funciona:\n1. Si hay varios usuarios, primero elige la cuenta a respaldar.\n2. Si no hay una tienda configurada, CyberFoil intenta perfiles guardados y luego pide una URL de tienda.\n3. Ingresa una nota de respaldo (obligatoria).\n4. CyberFoil analiza los guardados locales de ese usuario y sube cada uno al servidor.\n5. Se muestra progreso durante el analisis y la subida.\n6. Un resumen final muestra exitos y fallos.",
+      "set": "Cambia las preferencias de CyberFoil y las opciones de Remote.",
+      "backup": "Respalda todos los datos guardados locales del usuario seleccionado en tu servidor de Remote configurado con una sola acción.\n\nCómo funciona:\n1. Si hay varios usuarios, primero elige la cuenta a respaldar.\n2. Si no hay un Remote configurado, CyberFoil intenta perfiles guardados y luego pide una URL de Remote.\n3. Ingresa una nota de respaldo (obligatoria).\n4. CyberFoil analiza los guardados locales de ese usuario y sube cada uno al servidor.\n5. Se muestra progreso durante el análisis y la subida.\n6. Un resumen final muestra éxitos y fallos.",
       "exit": "Cierra CyberFoil y vuelve al menú HOME."
     }
   },
@@ -79,14 +79,14 @@
       "buttons": " Instalar Usando la Internet     Ayuda     Cancelar",
       "buttons1": " Selecionar Archivo     Seleccionar Todos     Instalar Archivo(s)     Cancelar"
     },
-    "shop": {
-      "loading": "Cargando lista de la tienda...",
-      "top_info": "Selecciona los archivos que quieres instalar desde la tienda y luego pulsa el botón +",
-      "failed": "No se pudo cargar la tienda",
-      "unreachable": "No se puede acceder a la tienda.",
-      "encrypted_unsupported": "Las respuestas cifradas de la tienda no son compatibles. Desactiva «Cifrar tienda» en los ajustes de eShop.",
-      "empty": "La tienda no tiene archivos.",
-      "source_string": " desde la tienda de eShop",
+    "remote": {
+      "loading": "Cargando lista de Remote...",
+      "top_info": "Selecciona los archivos que quieres instalar desde Remote y luego pulsa el botón +",
+      "failed": "No se pudo cargar Remote",
+      "unreachable": "No se puede acceder a Remote.",
+      "encrypted_unsupported": "Las respuestas cifradas de Remote no son compatibles. Desactiva «Cifrar Remote» en los ajustes de Remote.",
+      "empty": "Remote no tiene archivos.",
+      "source_string": " desde Remote",
       "buttons_loading": " Cancelar",
       "buttons": " Selecionar Archivo     Seleccionar Todos     Instalar Archivo(s)     Actualizar    / Sección     Ver     Cancelar",
       "buttons_all": " Selecionar Archivo     Seleccionar Todos     Instalar Archivo(s)     Actualizar    / Sección     Buscar     Ver     Cancelar",
@@ -257,14 +257,14 @@
       "auto_update": "Buscar actualizaciones de CyberFoil automaticamente",
       "gay_option": "Eliminar ánime",
       "sig_url": "URL para la instalación de sigpatches: ",
-      "shop_url": "URL de eShop: ",
-      "shop_user": "Usuario de eShop: ",
-      "shop_pass": "Contraseña de eShop: ",
-      "shop_hide_installed": "Ocultar los títulos instalados en la eShop",
-      "shop_hide_installed_section": "Ocultar la sección Instalados en la eShop",
-      "shop_all_base_only": "Mostrar solo títulos base en la sección Todo",
-      "shop_start_grid_mode": "Iniciar la tienda en modo cuadrícula",
-      "shop_reset_icons": "Reiniciar el cache de iconos de la tienda",
+      "remote_url": "URL de Remote: ",
+      "remote_user": "Usuario de Remote: ",
+      "remote_pass": "Contraseña de Remote: ",
+      "remote_hide_installed": "Ocultar los títulos instalados en Remote",
+      "remote_hide_installed_section": "Ocultar la sección «Instalados» en Remote",
+      "remote_all_base_only": "Mostrar solo títulos base en la sección «Todo»",
+      "remote_start_grid_mode": "Iniciar Remote en modo cuadrícula",
+      "remote_reset_icons": "Restablecer la caché de iconos de Remote",
       "language": "Idioma: ",
       "check_update": "Buscar actualizaciones de CyberFoil",
       "credits": "Créditos",
@@ -278,14 +278,14 @@
       "opt1": "Si, quiero un brick"
     },
     "sig_hint": "Escribe la URL desde donde se descargarán los sigpatches",
-    "shop": {
-      "url_hint": "Introduce la URL de tu eShop (ejemplo: http://192.168.1.2:8465)",
-      "user_hint": "Introduce tu nombre de usuario de eShop (opcional)",
-      "pass_hint": "Introduce tu contraseña de eShop (opcional)"
+    "remote": {
+      "url_hint": "Introduce la URL de tu Remote (ejemplo: http://192.168.1.2:8465)",
+      "user_hint": "Introduce tu nombre de usuario de Remote (opcional)",
+      "pass_hint": "Introduce tu contraseña de Remote (opcional)"
     },
     "cache_reset": {
       "title": "Reiniciar cache de iconos?",
-      "desc": "Esta opción elimina todo el cache de iconos de la tienda y fuerza la re-descarga la proxima vez que abras la tienda.",
+      "desc": "Esta opción elimina todo el cache de iconos de Remote y fuerza la re-descarga la proxima vez que abras Remote.",
       "confirm": "Reset"
     },
     "update": {
