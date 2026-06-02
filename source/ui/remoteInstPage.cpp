@@ -387,6 +387,10 @@ namespace {
         }
         if (!item.saveCreatedAt.empty())
             return TryParseDateSortKey(item.saveCreatedAt, out);
+        if (item.hasReleaseDate && item.releaseDate > 0) {
+            out = item.releaseDate;
+            return true;
+        }
         return false;
     }
 
@@ -629,7 +633,26 @@ namespace {
     bool IsDlcItem(const remoteInstStuff::RemoteItem& item)
     {
         std::int32_t normalizedType = -1;
-        return TryInferNormalizedAppType(item, normalizedType) && normalizedType == NcmContentMetaType_AddOnContent;
+        if (TryInferNormalizedAppType(item, normalizedType) && normalizedType == NcmContentMetaType_AddOnContent)
+            return true;
+
+        auto containsDlcMarker = [](const std::string& text) {
+            const std::string normalized = NormalizeSearchKey(text);
+            return normalized.find("dlc") != std::string::npos
+                || normalized.find("season pass") != std::string::npos
+                || normalized.find("addon") != std::string::npos
+                || normalized.find("add on") != std::string::npos
+                || normalized.find("add-on") != std::string::npos
+                || normalized.find("expansion") != std::string::npos;
+        };
+
+        if (containsDlcMarker(item.name))
+            return true;
+        if (containsDlcMarker(item.url))
+            return true;
+        if (item.hasAppId && containsDlcMarker(item.appId))
+            return true;
+        return false;
     }
 
     std::string BuildItemIdentityKey(const remoteInstStuff::RemoteItem& item)
@@ -1333,9 +1356,9 @@ namespace inst::ui {
             case 1:
                 return "Name Z-A";
             case 2:
-                return "Release Date Old-New";
+                return "Date Old-New";
             case 3:
-                return "Release Date New-Old";
+                return "Date New-Old";
             default:
                 return "Name A-Z";
         }
@@ -1496,7 +1519,7 @@ namespace inst::ui {
     {
         switch (this->browseSortMode) {
             case BrowseSortMode::DateDesc:
-                return "Date";
+                return inst::config::remoteLegacyMode ? "Release Date" : "Date";
             case BrowseSortMode::NameAsc:
                 return "Name";
             default:
@@ -1561,7 +1584,7 @@ namespace inst::ui {
             };
         } else {
             options = {
-                "Sort by Date",
+                inst::config::remoteLegacyMode ? "Sort by Release Date" : "Sort by Date",
                 "Sort by Name",
                 "Use Remote Order"
             };
@@ -2153,7 +2176,7 @@ namespace inst::ui {
                 baseUrl.pop_back();
             char titleIdHex[17] = {};
             std::snprintf(titleIdHex, sizeof(titleIdHex), "%016lX", titleId);
-            return baseUrl + "/api/remote/icon/" + std::string(titleIdHex);
+            return baseUrl + remoteInstStuff::GetRemoteApiPrefix() + "/icon/" + std::string(titleIdHex);
         };
 
         std::vector<remoteInstStuff::RemoteItem> remoteSaveItems;
@@ -2673,16 +2696,16 @@ namespace inst::ui {
                 continue;
 
             for (const auto& item : section.items) {
-                if (item.url.empty())
+                if (item.url.empty() && !item.hasTitleId && !item.hasAppId)
                     continue;
 
                 std::uint64_t baseTitleId = 0;
-                if (!DeriveBaseTitleId(item, baseTitleId))
-                    continue;
-                if (!isBaseInstalled(baseTitleId))
-                    continue;
+                const bool hasBaseTitleId = DeriveBaseTitleId(item, baseTitleId);
+                const bool baseInstalled = hasBaseTitleId && isBaseInstalled(baseTitleId);
 
                 if (!hasUpdatesSection && IsUpdateItem(item)) {
+                    if (!baseInstalled)
+                        continue;
                     const std::string key = BuildItemIdentityKey(item);
                     if (!key.empty() && !seenUpdateKeys.insert(key).second)
                         continue;
@@ -2693,6 +2716,8 @@ namespace inst::ui {
                 if (!hasDlcSection && IsDlcItem(item)) {
                     if (item.hasTitleId && this->installedSnapshot.installedDlcIds.count(item.titleId))
                         continue;
+                    if (hasBaseTitleId && !baseInstalled)
+                        RemoteDlcTrace("legacy dlc keep without base installed name='%s'", TraceNamePreview(item.name).c_str());
                     const std::string key = BuildItemIdentityKey(item);
                     if (!key.empty() && !seenDlcKeys.insert(key).second)
                         continue;
@@ -2856,28 +2881,30 @@ namespace inst::ui {
             section.items = std::move(filtered);
         }
 
-        for (auto& section : this->remoteSections) {
-            if (section.items.empty())
-                continue;
-            if (section.id == "all" || section.id == "installed")
-                continue;
-            if (section.id == "updates" || section.id == "dlc")
-                continue;
+        if (inst::config::remoteLegacyMode || this->catalogCacheUsedLegacyFallback) {
+            for (auto& section : this->remoteSections) {
+                if (section.items.empty())
+                    continue;
+                if (section.id == "all" || section.id == "installed")
+                    continue;
+                if (section.id == "updates" || section.id == "dlc")
+                    continue;
 
-            std::vector<remoteInstStuff::RemoteItem> filtered;
-            filtered.reserve(section.items.size());
-            for (const auto& item : section.items) {
-                if (!IsDlcItem(item)) {
-                    filtered.push_back(item);
-                    continue;
+                std::vector<remoteInstStuff::RemoteItem> filtered;
+                filtered.reserve(section.items.size());
+                for (const auto& item : section.items) {
+                    if (!IsDlcItem(item)) {
+                        filtered.push_back(item);
+                        continue;
+                    }
+                    std::uint32_t installedVersion = 0;
+                    if (isDlcInstalled(item))
+                        continue;
+                    if (isBaseInstalled(item, installedVersion))
+                        filtered.push_back(item);
                 }
-                std::uint32_t installedVersion = 0;
-                if (isDlcInstalled(item))
-                    continue;
-                if (isBaseInstalled(item, installedVersion))
-                    filtered.push_back(item);
+                section.items = std::move(filtered);
             }
-            section.items = std::move(filtered);
         }
 
         if (inst::config::remoteHideInstalled) {
@@ -3743,7 +3770,8 @@ namespace inst::ui {
         const bool canUseCatalogCache = !forceRefresh
             && this->catalogCacheValid
             && this->catalogCacheKey == cacheKey
-            && !this->catalogCacheSections.empty();
+            && !this->catalogCacheSections.empty()
+            && (!this->catalogCacheUsedLegacyFallback || inst::config::remoteLegacyMode);
 
         if (canUseCatalogCache) {
             updateLoadingProgress(89, "Using cached catalog...", true);
@@ -3840,7 +3868,8 @@ namespace inst::ui {
             this->remoteSections = std::move(fetchedSections);
             error = fetchError;
             usedLegacyFallback = fetchUsedLegacyFallback;
-            if (error.empty() && !this->remoteSections.empty()) {
+            if (error.empty() && !this->remoteSections.empty() &&
+                (!usedLegacyFallback || inst::config::remoteLegacyMode)) {
                 this->catalogCacheValid = true;
                 this->catalogCacheKey = cacheKey;
                 this->catalogCacheUsedLegacyFallback = usedLegacyFallback;

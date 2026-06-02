@@ -38,5 +38,6 @@ namespace remoteInstStuff {
     std::vector<RemoteItem> FetchRemote(const std::string& remoteUrl, const std::string& user, const std::string& pass, std::string& error, const RemoteFetchProgressCallback& progressCb = RemoteFetchProgressCallback());
     std::vector<RemoteSection> FetchRemoteSections(const std::string& remoteUrl, const std::string& user, const std::string& pass, std::string& error, bool* outUsedLegacyFallback = nullptr, const RemoteFetchProgressCallback& progressCb = RemoteFetchProgressCallback());
     std::string FetchRemoteMotd(const std::string& remoteUrl, const std::string& user, const std::string& pass);
+    std::string GetRemoteApiPrefix();
     void installTitleRemote(const std::vector<RemoteItem>& items, int storage, const std::string& sourceLabel);
 }

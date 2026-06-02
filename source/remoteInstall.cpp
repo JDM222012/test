@@ -49,6 +49,8 @@ namespace inst::ui {
 }
 
 namespace {
+    std::string gRemoteApiPrefix = "/api/remote";
+
     std::string FormatOneDecimal(double value)
     {
         char buf[32];
@@ -1290,6 +1292,11 @@ namespace {
 }
 
 namespace remoteInstStuff {
+    std::string GetRemoteApiPrefix()
+    {
+        return gRemoteApiPrefix;
+    }
+
     namespace {
         struct RemoteFetchProgressContext {
             const RemoteFetchProgressCallback* cb = nullptr;
@@ -1504,6 +1511,19 @@ namespace remoteInstStuff {
     }
 
     namespace {
+        std::string BuildLegacyIdentityKey(const RemoteItem& item)
+        {
+            if (!item.url.empty())
+                return "url:" + item.url;
+            if (item.hasTitleId)
+                return "tid:" + std::to_string(static_cast<unsigned long long>(item.titleId));
+            if (item.hasAppId)
+                return "aid:" + item.appId;
+            if (!item.name.empty())
+                return "name:" + item.name;
+            return std::string();
+        }
+
         bool AppendRemoteItemFromEntry(const nlohmann::json& entry, const std::string& baseUrl,
             std::vector<RemoteItem>& items, std::unordered_set<std::string>& seenItemUrls)
         {
@@ -1619,15 +1639,18 @@ namespace remoteInstStuff {
                     else if (entry["createdTs"].is_number_integer()) {
                         const auto parsedCreatedTs = entry["createdTs"].get<long long>();
                         if (parsedCreatedTs > 0)
-                            item.saveCreatedTs = static_cast<std::uint64_t>(parsedCreatedTs);
+                        item.saveCreatedTs = static_cast<std::uint64_t>(parsedCreatedTs);
                     }
                 }
             }
 
+            if (inst::config::remoteLegacyMode)
+                ApplyOfflineDataToItem(item, entry.is_object() && entry.contains("name") && entry["name"].is_string());
+
             if (!item.hasIconUrl && !inst::config::remoteLegacyMode) {
                 std::uint64_t baseTitleId = 0;
                 if (TryResolveBaseTitleId(item, baseTitleId) && baseTitleId != 0) {
-                    item.iconUrl = BuildFullUrl(baseUrl, "/api/remote/icon/" + FormatTitleIdHexUpper(baseTitleId));
+                    item.iconUrl = BuildFullUrl(baseUrl, GetRemoteApiPrefix() + "/icon/" + FormatTitleIdHexUpper(baseTitleId));
                     item.hasIconUrl = true;
                 }
             }
@@ -1676,6 +1699,103 @@ namespace remoteInstStuff {
                     }
                 }
             }
+            return any;
+        }
+
+        bool AppendLegacyTitleDbFromJson(const nlohmann::json& titledb, const std::string& baseUrl,
+            std::vector<RemoteItem>& items, std::unordered_set<std::string>& seenItemUrls)
+        {
+            if (!titledb.is_object())
+                return false;
+
+            bool any = false;
+            for (auto it = titledb.begin(); it != titledb.end(); ++it) {
+                const std::string key = it.key();
+                const auto& value = it.value();
+                if (!value.is_object())
+                    continue;
+
+                RemoteItem item;
+                item.name = value.value("name", key);
+                item.size = 0;
+                if (value.contains("size")) {
+                    if (value["size"].is_number_unsigned())
+                        item.size = value["size"].get<std::uint64_t>();
+                    else if (value["size"].is_number_integer()) {
+                        const auto parsedSize = value["size"].get<long long>();
+                        if (parsedSize > 0)
+                            item.size = static_cast<std::uint64_t>(parsedSize);
+                    }
+                }
+
+                const std::string idText = value.value("id", key);
+                std::uint64_t titleId = 0;
+                if (TryParseTitleIdText(idText, titleId) || TryParseTitleIdText(key, titleId)) {
+                    item.titleId = titleId;
+                    item.hasTitleId = true;
+                    InferAppTypeFromTitleId(titleId, item.appType);
+                }
+
+                if (value.contains("version")) {
+                    if (value["version"].is_number_unsigned()) {
+                        item.appVersion = value["version"].get<std::uint32_t>();
+                        item.hasAppVersion = true;
+                    } else if (value["version"].is_number_integer()) {
+                        const auto parsedVersion = value["version"].get<long long>();
+                        if (parsedVersion >= 0) {
+                            item.appVersion = static_cast<std::uint32_t>(parsedVersion);
+                            item.hasAppVersion = true;
+                        }
+                    }
+                }
+
+                if (value.contains("releaseDate")) {
+                    if (value["releaseDate"].is_number_unsigned()) {
+                        item.releaseDate = value["releaseDate"].get<std::uint32_t>();
+                        item.hasReleaseDate = true;
+                    } else if (value["releaseDate"].is_number_integer()) {
+                        const auto parsedReleaseDate = value["releaseDate"].get<long long>();
+                        if (parsedReleaseDate > 0) {
+                            item.releaseDate = static_cast<std::uint32_t>(parsedReleaseDate);
+                            item.hasReleaseDate = true;
+                        }
+                    }
+                } else if (value.contains("release_date")) {
+                    if (value["release_date"].is_number_unsigned()) {
+                        item.releaseDate = value["release_date"].get<std::uint32_t>();
+                        item.hasReleaseDate = true;
+                    } else if (value["release_date"].is_number_integer()) {
+                        const auto parsedReleaseDate = value["release_date"].get<long long>();
+                        if (parsedReleaseDate > 0) {
+                            item.releaseDate = static_cast<std::uint32_t>(parsedReleaseDate);
+                            item.hasReleaseDate = true;
+                        }
+                    }
+                }
+
+                if (value.contains("description") && value["description"].is_string() && item.name.empty())
+                    item.name = value["description"].get<std::string>();
+
+                if (item.name.empty())
+                    continue;
+
+                ApplyOfflineDataToItem(item, true);
+                if (!item.hasIconUrl && !item.hasTitleId && !item.url.empty()) {
+                    std::uint64_t baseTitleId = 0;
+                    if (TryResolveBaseTitleId(item, baseTitleId) && baseTitleId != 0) {
+                        item.iconUrl = BuildFullUrl(baseUrl, GetRemoteApiPrefix() + "/icon/" + FormatTitleIdHexUpper(baseTitleId));
+                        item.hasIconUrl = true;
+                    }
+                }
+
+                const std::string identityKey = BuildLegacyIdentityKey(item);
+                if (!identityKey.empty() && !seenItemUrls.insert(identityKey).second)
+                    continue;
+
+                items.push_back(std::move(item));
+                any = true;
+            }
+
             return any;
         }
 
@@ -1731,6 +1851,10 @@ namespace remoteInstStuff {
             }
             if (remote.contains("paths")) {
                 if (AppendLegacyFilesFromJson(remote["paths"], baseUrl, items, seenItemUrls))
+                    handled = true;
+            }
+            if (remote.contains("titledb")) {
+                if (AppendLegacyTitleDbFromJson(remote["titledb"], baseUrl, items, seenItemUrls))
                     handled = true;
             }
 
@@ -1841,27 +1965,39 @@ namespace remoteInstStuff {
             return sections;
         }
 
-        std::string sectionsUrl = baseUrl + "/api/remote/sections";
-        FetchResult fetch = FetchRemoteResponse(sectionsUrl, user, pass, progressCb);
-        if (fetch.responseCode == 404) {
-            tryLegacyFallback();
-            return sections;
-        }
+        auto trySectionsPath = [&](const std::string& apiPrefix) -> bool {
+            std::string sectionsUrl = baseUrl + apiPrefix + "/sections";
+            FetchResult fetch = FetchRemoteResponse(sectionsUrl, user, pass, progressCb);
+            if (fetch.responseCode == 404)
+                return false;
 
-        if (!ValidateRemoteResponse(fetch, error)) {
-            if (!fetch.error.empty()) {
-                error = "inst.remote.unreachable"_lang + "\n" + fetch.error;
-                if (fetch.responseCode > 0)
-                    error += "\nHTTP " + std::to_string(fetch.responseCode);
-                return sections;
+            if (!ValidateRemoteResponse(fetch, error)) {
+                if (!fetch.error.empty()) {
+                    error = "inst.remote.unreachable"_lang + "\n" + fetch.error;
+                    if (fetch.responseCode > 0)
+                        error += "\nHTTP " + std::to_string(fetch.responseCode);
+                }
+                return false;
             }
-            if (tryLegacyFallback())
-                return sections;
-            return sections;
-        }
 
-        sections = ParseRemoteSectionsBody(fetch.body, baseUrl, error);
-        if (sections.empty() && !error.empty() && tryLegacyFallback())
+            std::string parseError;
+            std::vector<RemoteSection> parsed = ParseRemoteSectionsBody(fetch.body, baseUrl, parseError);
+            if (parsed.empty() && !parseError.empty()) {
+                error = parseError;
+                return false;
+            }
+
+            sections = std::move(parsed);
+            error.clear();
+            gRemoteApiPrefix = apiPrefix;
+            return true;
+        };
+
+        if (trySectionsPath("/api/remote"))
+            return sections;
+        if (trySectionsPath("/api/shop"))
+            return sections;
+        if (tryLegacyFallback())
             return sections;
         return sections;
     }
