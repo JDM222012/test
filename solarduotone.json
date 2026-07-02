@@ -1,0 +1,14 @@
+{
+    "name": "solarDuoTone",
+    "description": "Enables solarDuoTone",
+    "authors": [
+        {
+            "name": "jdmann6",
+            "id": "554042298053427211"
+        },
+    ],
+"plus": {
+       "version": "0",
+       "iconpack": "solarduotone"
+    }
+}
